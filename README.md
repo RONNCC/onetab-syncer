@@ -1,14 +1,19 @@
-# onetab-sync
+
+Maintained version of https://github.com/runoshun/onetab-sync
+
+---
+
+# onetab-syncer
 Command line utility for sync and backup [OneTab](https://chrome.google.com/webstore/detail/onetab/chphlpgkkbolifaimnlloiipkdnihall) Chrome extension data.
 
 ## Install
 ```
-npm install -g onetab-sync
+npm install -g onetab-syncer
 ```
 
 ## Usage
 ```
-  Usage: onetab-sync [options] [command]
+  Usage: onetab-syncer [options] [command]
 
   upload/download OneTab data to Gist
 
