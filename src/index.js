@@ -9,7 +9,7 @@ import conf from "./conf";
 const uploadToGist = async () => {
     console.info("uploading data to gist ...");
     try {
-        let config = await conf.load(["chrome_profile_path", "onetab_ext_id", "gist_token"]);
+        let config = await conf.load(["chrome_profile_path", "onetab_ext_id", "gist_token","error_notif_email"]);
         let oneTabData = await readOneTabData(config);
         let res = await gist.upload(config, oneTabData);
         console.info("success. " + res.html_url);
@@ -22,7 +22,7 @@ const uploadToGist = async () => {
 const downloadFromGist = async () => {
     console.info("downloading data from gist ...");
     try {
-        let config = await conf.load(["chrome_profile_path", "onetab_ext_id", "gist_token", "gist_id"]);
+        let config = await conf.load(["chrome_profile_path", "onetab_ext_id", "gist_token", "gist_id","error_notif_email"]);
         let [data, metadata] = await gist.download(config);
         let oneTabData = await readOneTabData(config);
         let res = await gist.backup(config, oneTabData);
@@ -36,7 +36,7 @@ const downloadFromGist = async () => {
 
 const syncWithGist = async () => {
     try {
-        let config = await conf.load(["chrome_profile_path", "onetab_ext_id", "gist_token"]);
+        let config = await conf.load(["chrome_profile_path", "onetab_ext_id", "gist_token","error_notif_email"]);
         return await detectDownloadOrUpload(config);
     } catch (e) {
         console.error(e);

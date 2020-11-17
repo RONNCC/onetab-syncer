@@ -2,6 +2,8 @@ const levelup = require("levelup");
 const leveldown = require("leveldown");
 const sqlite3 = require("sqlite3").verbose();
 const fs = require("fs");
+const notifier = require('node-notifier');
+const nc = new notifier.NotificationCenter();
 
 export const openOneTabDB = async (config) => {
     try {
@@ -20,23 +22,36 @@ const openLevelDb = async (config, pathForTest) => {
     } else {
         path = pathForTest;
     }
-
     try {
-        let db = await levelup(leveldown(path), {createIfMissing: false});
+        let db = await levelup(leveldown(path), {createIfMissing: false}, (err,db) => {
+              if (err) {
+                nc
+                  .notify({
+                        message: 'Tried to sync onetab but chrome is open.',
+                        timeout:1000,
+                        sound: true,
+                        reply: true
+                    }, function(err, data) {
+                    // Will also wait until notification is closed.
+                    console.log(err, data);
+                  });
+                throw err;
+              }
+        });
         return new Promise((resolve, reject) => {
             let resolved = false;
             db.createKeyStream().on("data", (data) => {
                 let key = data.toString();
                 if(key.startsWith("_chrome-extension://" + config.onetab_ext_id) && key.endsWith("state")) {
-                    resolve(createLevelDBInterface(db, key));
                     resolved = true;
+                    resolve(createLevelDBInterface(db, key));
                 }
             }).on("end", () => {
                 if (!resolved) {
                     reject(new Error("one tab data is not found."));
                 }
             });
-        })
+        });
     } catch (err) {
         return Promise.reject("can't open chrome localstorage db. If browser is running, please quit." + err.message);
     }
@@ -81,7 +96,6 @@ const openSqliteDb = (config, pathForTest) => {
             reject (e);
             return;
         }
-
         let db = new sqlite3.Database(path);
         db.serialize(() => {
             db.get("SELECT key,value FROM ItemTable WHERE key = ?", "state", (err, row) => {

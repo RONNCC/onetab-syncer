@@ -50,6 +50,12 @@ const QUESTIONS = {
         message: "Input the gist ID which OneTab data is stored.",
         validate: (value) => !!value,
     }],
+    "error_notif_email": [{
+        type: "input",
+        name: "error_notif_email",
+        message: "Input the email where we should send error notifications to.",
+        validate: (value) => !!value,
+    }],
 };
 
 const loadConfig = (requests) => {
