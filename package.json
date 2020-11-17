@@ -1,6 +1,6 @@
 {
   "name": "@ronncc/onetab-syncer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "upload/download OneTab data to Gist",
   "main": "index.js",
   "bin": {
