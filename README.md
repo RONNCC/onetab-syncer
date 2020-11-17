@@ -8,14 +8,15 @@ Command line utility for sync and backup [OneTab](https://chrome.google.com/webs
 
 ## Install
 ```
-npm install -g onetab-syncer
+npm install -g @ronncc/onetab-syncer
 ```
 
 ## Usage
 ```
   Usage: onetab-syncer [options] [command]
 
-  upload/download OneTab data to Gist
+  1) close chrome
+  2) upload/download/sync OneTab data to Gist
 
 
   Options:
@@ -31,3 +32,4 @@ npm install -g onetab-syncer
     sync            sync onetab data with gist
     restore <file>  restore onetab data from backup file
 ```
+
