@@ -4,7 +4,7 @@
   "description": "upload/download OneTab data to Gist",
   "main": "index.js",
   "bin": {
-    "onetab-sync": "index.js"
+    "onetab-syncer": "index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
